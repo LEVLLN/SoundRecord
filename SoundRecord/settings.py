@@ -26,7 +26,7 @@ SECRET_KEY = 'k=xci8@mkl6y@448w)ta=#q=c13p(+e@a^6hec7@lzu6@rkepk'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_PROFILE_MODULE = 'account.UserProfile'
 ACCOUNT_ACTIVATION_DAYS = 2 # кол-во дней для хранения кода активации
 
 # для отправки кода активации
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'reservation',
-    'registration'
+
 ]
 
 MIDDLEWARE = [

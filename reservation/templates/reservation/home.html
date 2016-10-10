@@ -1,6 +1,6 @@
 <h1>Hello World</h1>
 <h2>Welcome to Reservation System</h2>
-{#{% for schedule in schedules %}#}
-{#    <h4><a href="{% url 'schedules' schedule.user%}">{{ reserv.user }}</a></h4>#}
-{#    <pre>{{ reserv.date_of_reserv }}</pre>#}
-{#{%  endfor %}#}
+{% for schedule in schedules %}
+
+    <h4>{{ schedule.soundman }}</h4>
+{%  endfor %}
