@@ -13,17 +13,17 @@ def home(request):
 
     return render(request, 'reservation/home.html',context)
 
-# def login(request):
-#     render(request,'reservation/login.html')
-#     username = request.POST['username']
-#     password = request.POST['password']
-#     user = auth.authenticate(username=username, password=password)
-#     if user is not None and user.is_active:
-#         # Правильный пароль и пользователь "активен"
-#         auth.login(request, user)
-#         # Перенаправление на "правильную" страницу
-#         return HttpResponseRedirect("reservation/home.html")
-#     else:
-#         # Отображение страницы с ошибкой
-#         return HttpResponseRedirect("/account/invalid/")
-#
+def login(request):
+    render(request,'reservation/login.html')
+    username = request.POST['username']
+    password = request.POST['password']
+    user = auth.authenticate(username=username, password=password)
+    if user is not None and user.is_active:
+        # Правильный пароль и пользователь "активен"
+        auth.login(request, user)
+        # Перенаправление на "правильную" страницу
+        return HttpResponseRedirect("reservation/home.html")
+    else:
+        # Отображение страницы с ошибкой
+        return HttpResponseRedirect("/account/invalid/")
+
