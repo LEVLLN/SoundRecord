@@ -2,7 +2,7 @@
 {% if form.errors %}
     <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
 {% endif %}
-<form  method='POST' action='.'>
+<form action='/login' method='POST' >
     <label for="username">Логин:</label>
     {% csrf_token %}
     <input type="text" name="username" value="" id="username">

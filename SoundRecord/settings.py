@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 AUTH_PROFILE_MODULE = 'account.UserProfile'
 ACCOUNT_ACTIVATION_DAYS = 2 # кол-во дней для хранения кода активации
-
+APPEND_SLASH=False
 # для отправки кода активации
 AUTH_USER_EMAIL_UNIQUE = True
 EMAIL_HOST = 'localhost'

@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response, redirect
 from django.contrib import auth
 # Create your views here.
 from reservation.models import Schedule, Reservation
@@ -14,6 +14,7 @@ def home(request):
     return render(request, 'reservation/home.html',context)
 
 def login(request):
+    print(request.POST)
     username = request.POST['username']
     password = request.POST['password']
     user = auth.authenticate(username=username, password=password)
@@ -21,10 +22,19 @@ def login(request):
         # Правильный пароль и пользователь "активен"
         auth.login(request, user)
         # Перенаправление на "правильную" страницу
-        return HttpResponseRedirect("reservation/home.html")
+        return redirect('/welcome')
     else:
         # Отображение страницы с ошибкой
-        return HttpResponseRedirect("/account/invalid/")
+        return redirect('/')
 
-def loginpage(request):
+def login_page(request):
     return render(request,'reservation/login.html')
+
+def welcome_page(request):
+    from django.contrib.auth.models import User
+    username = request.user
+    context = {
+        'username': username,
+
+    }
+    return render(request, 'reservation/welcome_page.html', context)
