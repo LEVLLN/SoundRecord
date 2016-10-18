@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^accept/$', login_page, name='logaccept'),
     url(r'^login', login, name='login'),
     url(r'^welcome', welcome_page, name='welcome')
+    #fdsfsdf
 ]
