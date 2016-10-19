@@ -1,12 +1,9 @@
 from django.conf.urls import url
-from reservation.views import home
-from reservation.views import login_page
-from reservation.views import login
-from reservation.views import welcome_page
+from reservation import views
 
 urlpatterns = [
-    url(r'^$', home, name='home'),
-    url(r'^accept/$', login_page, name='logaccept'),
-    url(r'^login', login, name='login'),
-    url(r'^welcome', welcome_page, name='welcome')
+    url(r'^$', views.home, name='home'),
+    url(r'^register', views.Registration.register, name='register'),
+    url(r'^login', views.Authorization.login, name='login'),
+    url(r'^logout', views.Authorization.logout, name='logout')
 ]

@@ -1,40 +1,56 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, render_to_response, redirect
 from django.contrib import auth
-# Create your views here.
-from reservation.models import Schedule, Reservation
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from reservation.models import Schedule
+from django.contrib.auth.models import User
 
 
 def home(request):
-    schedules = Reservation.objects.all()
-    context ={
+    schedules = Schedule.objects.all()
+    context = {
         'schedules': schedules,
     }
+    return render(request, 'reservation/home.html', context)
 
-    return render(request, 'reservation/home.html',context)
 
-def login(request):
-    print(request.POST)
-    username = request.POST['username']
-    password = request.POST['password']
-    user = auth.authenticate(username=username, password=password)
-    if user is not None and user.is_active:
-        # Правильный пароль и пользователь "активен"
-        auth.login(request, user)
-        # Перенаправление на "правильную" страницу
-        return redirect('/welcome')
-    else:
-        # Отображение страницы с ошибкой
-        return redirect('/')
+class Authorization:
+    def login(request):
+        if request.method == "GET":
+            if request.user.is_authenticated():
+                return HttpResponse("You are authorized")
+            else:
+                return render(request, "registration/login.html")
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = auth.authenticate(username=username, password=password)
+            if user is not None and user.is_active:
+                auth.login(request, user)
+                return HttpResponse("its ok")
+            else:
+                return HttpResponse("No users like this")
 
-def login_page(request):
-    return render(request,'reservation/login.html')
+    def logout(request):
+        auth.logout(request)
+        return HttpResponseRedirect("/login")
 
-def welcome_page(request):
-    from django.contrib.auth.models import User
-    username = request.user
-    context = {
-        'username': username,
 
-    }
-    return render(request, 'reservation/welcome_page.html', context)
+class Registration:
+    def register(request):
+        if request.user.is_authenticated():
+                return HttpResponse("You are authorized")
+        else:
+            if request.method == "GET":
+                return render(request, "registration/register.html")
+            if request.method == "POST":
+                try:
+                    username = request.POST['username']
+                    password = request.POST['password']
+                    email = request.POST['email']
+                    user = User.objects.create_user(username, email, password)
+                    user.save()
+                    if user is not None and user.is_active:
+                        return HttpResponse("The registration has been completed succsesfully")
+                except Exception:
+                    return HttpResponse("FAIL")
